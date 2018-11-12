@@ -20,10 +20,13 @@ class TodoList extends Component {
 
   handleInputChange(e) {
     const value = e.target.value;
+    // const value = this.input.value; // 不建议用ref
     // 通过setState函数改变数据,新写法,对象变成函数，会同步变异步，所以target.value先要保存一下
     this.setState(() => ({
       inputValue: value
-    }));
+    }),()=>{
+      //因为setState是异步执行的，所以在setState第二个参数是执行完之后的回调函数
+    });
     // this.setState({
     //   inputValue: e.target.value
     // })
@@ -79,6 +82,7 @@ class TodoList extends Component {
           <label htmlFor="insertArea">输入内容</label>
           <input id='insertArea' className='input' value={this.state.inputValue}
                  onChange={this.handleInputChange}
+                 ref={(input)=>{this.input=input}}
                  type="text"/>
           <button onClick={this.handleButtonClick}>提交</button>
         </div>

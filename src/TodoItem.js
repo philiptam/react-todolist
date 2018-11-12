@@ -26,7 +26,7 @@ class TodoItem extends Component {
 // 校验传值的类型,isRequired必须要传递,可以通过arrayOf接收多个类型
 TodoItem.propTypes = {
   test: PropTypes.string.isRequired,
-  content: PropTypes.arrayOf(PropTypes.number,PropTypes.string),
+  content: PropTypes.oneOfType([PropTypes.number,PropTypes.string]),
   deleteItem: PropTypes.func,
   index: PropTypes.number
 }
