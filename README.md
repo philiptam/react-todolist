@@ -59,6 +59,14 @@ setState 异步的，提升性能
 
 
 
+## 生命周期函数指在某一个时刻组件会自动调用执行的函数
+#### componentWillMount 在组件即将被挂载到页面的时刻自动执行
+#### componentDidMount 组件挂载后执行
+
+#### shouldComponentUpdate
+组件被更新之前它会自动被执行 需要返回一个布尔值 true 更新 false 组件不更新
+
+#### componentWillUpdate 组件被更新之前它会自动执行，但是他在shouldComponentUpdate之后执行，如果shouldComponentUpdate返回true他才会执行，如果返回false就不会执行
 
 
 
