@@ -1,5 +1,5 @@
 import React, {Component, Fragment} from 'react';
-
+import './style.css'
 
 class TodoList extends Component {
 
@@ -43,13 +43,20 @@ class TodoList extends Component {
       // 第一层必须要包裹元素，如果不用div包裹，可以在Fragment代替div，而且并不会显示任何元素
       <Fragment>
         <div>
-          <input value={this.state.inputValue} onChange={this.handleInputChange.bind(this)} type="text"/>
+          {/*label点击时可以自动聚焦到input标签*/}
+          <label htmlFor="insertArea">输入内容</label>
+          <input id='insertArea' className='input' value={this.state.inputValue} onChange={this.handleInputChange.bind(this)}
+                 type="text"/>
           <button onClick={this.handleButtonClick.bind(this)}>提交</button>
         </div>
         <ul>
           {
+            //dangerouslySetInnerHTML 可以将输入的标签转化成标签，但是可能会被攻击
             this.state.list.map((item, index) => {
-              return <li key={index} onClick={this.handleItemDel.bind(this, index)}>{item}</li>
+              return <li key={index}
+                         onClick={this.handleItemDel.bind(this, index)}
+                         dangerouslySetInnerHTML={{__html: item}}
+              ></li>
             })
           }
         </ul>
