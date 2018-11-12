@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import PropTypes from 'prop-types';
 
 class TodoItem extends Component {
   constructor(props) {
@@ -14,11 +15,23 @@ class TodoItem extends Component {
   }
 
   render() {
-    const {content} = this.props;
+    const {content, test} = this.props;
     return (
-      <div onClick={this.handleClick}>{content}</div>
+      <div onClick={this.handleClick}>{test}{content}</div>
     )
   }
 }
 
+// 校验传值的类型,isRequired必须要传递,可以通过arrayOf接收多个类型
+TodoItem.propTypes = {
+  test: PropTypes.string.isRequired,
+  content: PropTypes.arrayOf(PropTypes.number,PropTypes.string),
+  deleteItem: PropTypes.func,
+  index: PropTypes.number
+}
+
+// 默认值
+TodoItem.defaultProps = {
+  test: 'hello world'
+}
 export default TodoItem
