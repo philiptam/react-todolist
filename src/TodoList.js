@@ -20,17 +20,38 @@ class TodoList extends Component {
     })
   }
 
+  handleButtonClick() {
+    // 重新赋值给数组,并清空inputValue
+    this.setState({
+      list: [...this.state.list, this.state.inputValue],
+      inputValue: ''
+    })
+  }
+
+  handleItemDel(index) {
+    // index 数组索引
+    // immutable state不允许做任何的改变,拷贝副本出来修改
+    const list = [...this.state.list];// 拷贝数组
+    list.splice(index, 1);
+    this.setState({
+      list
+    })
+  }
+
   render() {
     return (
       // 第一层必须要包裹元素，如果不用div包裹，可以在Fragment代替div，而且并不会显示任何元素
       <Fragment>
         <div>
           <input value={this.state.inputValue} onChange={this.handleInputChange.bind(this)} type="text"/>
-          <button>提交</button>
+          <button onClick={this.handleButtonClick.bind(this)}>提交</button>
         </div>
         <ul>
-          <li>learn english</li>
-          <li>learn react</li>
+          {
+            this.state.list.map((item, index) => {
+              return <li key={index} onClick={this.handleItemDel.bind(this, index)}>{item}</li>
+            })
+          }
         </ul>
       </Fragment>
     );
