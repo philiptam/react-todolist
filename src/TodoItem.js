@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 
 class TodoItem extends Component {
   constructor(props) {
+    // 当组件的state或者props发生改变的时候，render函数就会重新执行
     super(props);
     this.handleClick = this.handleClick.bind(this)// 可以节约性能
   }
