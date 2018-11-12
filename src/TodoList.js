@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
-import './style.css'
+import './style.css';
+import TodoItem from './TodoItem'
 
 class TodoList extends Component {
 
@@ -45,7 +46,8 @@ class TodoList extends Component {
         <div>
           {/*label点击时可以自动聚焦到input标签*/}
           <label htmlFor="insertArea">输入内容</label>
-          <input id='insertArea' className='input' value={this.state.inputValue} onChange={this.handleInputChange.bind(this)}
+          <input id='insertArea' className='input' value={this.state.inputValue}
+                 onChange={this.handleInputChange.bind(this)}
                  type="text"/>
           <button onClick={this.handleButtonClick.bind(this)}>提交</button>
         </div>
@@ -53,10 +55,17 @@ class TodoList extends Component {
           {
             //dangerouslySetInnerHTML 可以将输入的标签转化成标签，但是可能会被攻击
             this.state.list.map((item, index) => {
-              return <li key={index}
-                         onClick={this.handleItemDel.bind(this, index)}
-                         dangerouslySetInnerHTML={{__html: item}}
-              ></li>
+              //通过content这个属性转给子组件,将方法传给子组件
+              return (
+                <TodoItem index={index}
+                          content={item}
+                          deleteItem={this.handleItemDel.bind(this)}
+                          key={index}/>
+                /*<li key={index}
+                    onClick={this.handleItemDel.bind(this, index)}
+                    dangerouslySetInnerHTML={{__html: item}}
+                ></li>*/
+              )
             })
           }
         </ul>
