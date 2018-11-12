@@ -1,6 +1,6 @@
 import React, {Component, Fragment} from 'react';
+import TodoItem from './TodoItem';
 import './style.css';
-import TodoItem from './TodoItem'
 
 class TodoList extends Component {
 
@@ -11,31 +11,61 @@ class TodoList extends Component {
     this.state = {
       inputValue: '',
       list: []
-    }
+    };
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleButtonClick = this.handleButtonClick.bind(this);
+    this.handleItemDel = this.handleItemDel.bind(this);
   }
 
   handleInputChange(e) {
-    // 通过setState函数改变数据
-    this.setState({
-      inputValue: e.target.value
-    })
+    const value = e.target.value;
+    // 通过setState函数改变数据,新写法,对象变成函数，会同步变异步，所以target.value先要保存一下
+    this.setState(() => ({
+      inputValue: value
+    }));
+    // this.setState({
+    //   inputValue: e.target.value
+    // })
   }
 
   handleButtonClick() {
-    // 重新赋值给数组,并清空inputValue
-    this.setState({
+    this.setState(() => ({
       list: [...this.state.list, this.state.inputValue],
       inputValue: ''
-    })
+    }))
+
+    // 重新赋值给数组,并清空inputValue
+    // this.setState({
+    //   list: [...this.state.list, this.state.inputValue],
+    //   inputValue: ''
+    // })
   }
 
   handleItemDel(index) {
     // index 数组索引
     // immutable state不允许做任何的改变,拷贝副本出来修改
-    const list = [...this.state.list];// 拷贝数组
-    list.splice(index, 1);
-    this.setState({
-      list
+    // prevState可接收上一次的参数
+    this.setState((prevState) => {
+      const list = [...prevState.list];
+      list.splice(index, 1);
+      return {list}
+    })
+  }
+
+  getTodoItem() {
+//dangerouslySetInnerHTML 可以将输入的标签转化成标签，但是可能会被攻击
+    return this.state.list.map((item, index) => {
+      //通过content这个属性转给子组件,将方法传给子组件
+      return (
+        <TodoItem index={index}
+                  content={item}
+                  deleteItem={this.handleItemDel}
+                  key={index}/>
+        /*<li key={index}
+            onClick={this.handleItemDel.bind(this, index)}
+            dangerouslySetInnerHTML={{__html: item}}
+        ></li>*/
+      )
     })
   }
 
@@ -47,27 +77,12 @@ class TodoList extends Component {
           {/*label点击时可以自动聚焦到input标签*/}
           <label htmlFor="insertArea">输入内容</label>
           <input id='insertArea' className='input' value={this.state.inputValue}
-                 onChange={this.handleInputChange.bind(this)}
+                 onChange={this.handleInputChange}
                  type="text"/>
-          <button onClick={this.handleButtonClick.bind(this)}>提交</button>
+          <button onClick={this.handleButtonClick}>提交</button>
         </div>
         <ul>
-          {
-            //dangerouslySetInnerHTML 可以将输入的标签转化成标签，但是可能会被攻击
-            this.state.list.map((item, index) => {
-              //通过content这个属性转给子组件,将方法传给子组件
-              return (
-                <TodoItem index={index}
-                          content={item}
-                          deleteItem={this.handleItemDel.bind(this)}
-                          key={index}/>
-                /*<li key={index}
-                    onClick={this.handleItemDel.bind(this, index)}
-                    dangerouslySetInnerHTML={{__html: item}}
-                ></li>*/
-              )
-            })
-          }
+          {this.getTodoItem()}
         </ul>
       </Fragment>
     );
