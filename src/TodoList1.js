@@ -16,14 +16,24 @@ class TodoList1 extends Component {
   constructor(props) {
     super(props);
     this.state = store.getState();
+    this.handleOnChange = this.handleOnChange.bind(this);
+    this.handleStoreChange=this.handleStoreChange.
+    store.subscribe(this.handleStoreChange);
   }
 
+  handleOnChange(e) {
+    const action = {
+      type: 'change_input_value',
+      value: e.target.value
+    }
+    store.dispatch(action)
+  }
 
   render() {
     return (
       <div style={{marginTop: '20px', marginLeft: '20px'}}>
         <div>
-          <Input value={this.state.inputValue} style={{width: '300px'}}/>
+          <Input value={this.state.inputValue} onChange={this.handleOnChange} style={{width: '300px'}}/>
           <Button type='primary'>提交</Button>
         </div>
         <List
