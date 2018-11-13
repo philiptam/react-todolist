@@ -68,6 +68,9 @@ setState 异步的，提升性能
 
 #### componentWillUpdate 组件被更新之前它会自动执行，但是他在shouldComponentUpdate之后执行，如果shouldComponentUpdate返回true他才会执行，如果返回false就不会执行
 
+## redux
+
+store 放数据
 
 
 

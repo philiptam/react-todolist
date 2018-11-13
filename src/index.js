@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app/App';
+import TodoList1 from './TodoList1';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<TodoList1 />, document.getElementById('root'));
 
