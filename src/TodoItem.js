@@ -9,7 +9,7 @@ class TodoItem extends Component {
   }
 
   componentDidMount() {
-    console.log('ajax请求');
+
   }
 
   // 提高性能，避免无为渲染
@@ -24,7 +24,6 @@ class TodoItem extends Component {
   }
 
   render() {
-    console.log('child render');
     const {content, test} = this.props;
     return (
       <div onClick={this.handleClick}>{test}{content}</div>

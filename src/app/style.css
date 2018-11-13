@@ -1,0 +1,28 @@
+/*入场的瞬间*/
+.fade-enter {
+    opacity: 0;
+}
+
+/*入场动画完成前存在*/
+.fade-enter-active {
+    opacity: 1;
+    transition: opacity 1s ease-in;
+}
+
+/*入场动画执行完成之后*/
+.fade-enter-done {
+    opacity: 1;
+}
+
+.fade-exit {
+    opacity: 1;
+}
+
+.fade-exit-active {
+    opacity: 0;
+    transition: opacity 1s ease-in;
+}
+
+.fade-exit-done {
+    opacity: 0;
+}

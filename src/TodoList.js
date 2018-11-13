@@ -1,6 +1,7 @@
-import React, { Component, Fragment } from 'react';
+import React, {Component, Fragment} from 'react';
 import TodoItem from './TodoItem';
 import Test from './Test';
+import axios from 'axios';
 import './style.css';
 
 class TodoList extends Component {
@@ -99,9 +100,12 @@ class TodoList extends Component {
   }
 
   // componentDidMount 组件挂载后执行
-  // componentDidMount() {
-  //   console.log('componentDidMount');
-  // }
+  componentDidMount() {
+    axios.get('/api/todolist').then((res) => {
+      console.log(res);
+      this.setState(() => ({list: [...res.data]}))
+    })
+  }
 
   // 组件被更新之前它会自动被执行 需要返回一个布尔值 true 更新 false 组件不更新
   // shouldComponentUpdate() {
@@ -118,7 +122,6 @@ class TodoList extends Component {
   // componentDidUpdate(){
   //   console.log('componentDidUpdate');
   // }
-
 
 
 }
