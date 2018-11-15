@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css';
 
-import {getInputChangeAction, getAddItemAction, getDeleteItemAction} from './store/actionCreators'
+import {getInputChangeAction, getAddItemAction, getDeleteItemAction, getInitTodoList} from './store/actionCreators'
 import store from './store/index';
 import TodoListUi from './TodoListUi'
 
@@ -14,8 +14,13 @@ class TodoList1 extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleBtnClick = this.handleBtnClick.bind(this);
     this.handleStoreChange = this.handleStoreChange.bind(this);
-    this.handleDeleteItem=this.handleDeleteItem.bind(this);
+    this.handleDeleteItem = this.handleDeleteItem.bind(this);
     store.subscribe(this.handleStoreChange);//subscribe 这个组件去订阅store，
+  }
+
+  componentDidMount() {
+    const action = getInitTodoList();// 接收到返回的函数
+    store.dispatch(action)
   }
 
   handleOnChange(e) {
