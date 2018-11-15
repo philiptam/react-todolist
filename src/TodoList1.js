@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css';
-import {Input, Button, List} from 'antd';
+
 import {getInputChangeAction, getAddItemAction, getDeleteItemAction} from './store/actionCreators'
 import store from './store/index';
+import TodoListUi from './TodoListUi'
 
 
 class TodoList1 extends Component {
@@ -13,6 +14,7 @@ class TodoList1 extends Component {
     this.handleOnChange = this.handleOnChange.bind(this);
     this.handleBtnClick = this.handleBtnClick.bind(this);
     this.handleStoreChange = this.handleStoreChange.bind(this);
+    this.handleDeleteItem=this.handleDeleteItem.bind(this);
     store.subscribe(this.handleStoreChange);//subscribe 这个组件去订阅store，
   }
 
@@ -42,21 +44,13 @@ class TodoList1 extends Component {
 
 
   render() {
-    return (
-      <div style={{marginTop: '20px', marginLeft: '20px'}}>
-        <div>
-          <Input value={this.state.inputValue} onChange={this.handleOnChange} style={{width: '300px'}}/>
-          <Button onClick={this.handleBtnClick} type='primary'>提交</Button>
-        </div>
-        <List
-          style={{marginTop: '10px', width: '300px'}}
-          bordered
-          dataSource={this.state.list}
-          renderItem={(item, index) => (
-            <List.Item onClick={this.handleDeleteItem.bind(this, index)}>{item}</List.Item>)}
-        />
-      </div>
-    )
+    return <TodoListUi
+      inputValue={this.state.inputValue}
+      list={this.state.list}
+      handleOnChange={this.handleOnChange}
+      handleBtnClick={this.handleBtnClick}
+      handleDeleteItem={this.handleDeleteItem}
+    />
   }
 }
 
