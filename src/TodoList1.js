@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css';
 import {Input, Button, List} from 'antd';
-import {CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM} from './store/actionType'
+import {getInputChangeAction, getAddItemAction, getDeleteItemAction} from './store/actionCreators'
 import store from './store/index';
 
 
@@ -18,10 +18,7 @@ class TodoList1 extends Component {
 
   handleOnChange(e) {
     //创建一个action
-    const action = {
-      type: CHANGE_INPUT_VALUE,// type描述做什么事情
-      value: e.target.value // 传递value
-    };
+    const action = getInputChangeAction(e.target.value);
     // 用dispatch把这句话传给store
     store.dispatch(action)
   }
@@ -33,18 +30,13 @@ class TodoList1 extends Component {
 
   // 按钮点击事件
   handleBtnClick() {
-    const action = {
-      type: ADD_TODO_ITEM
-    };
+    const action = getAddItemAction();
     store.dispatch(action)
   }
 
   // 点击删除每一项
   handleDeleteItem(index) {
-    const action = {
-      type: DELETE_TODO_ITEM,
-      index
-    };
+    const action = getDeleteItemAction(index);
     store.dispatch(action)
   }
 
