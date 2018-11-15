@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import 'antd/dist/antd.css';
 import {Input, Button, List} from 'antd';
+import {CHANGE_INPUT_VALUE, ADD_TODO_ITEM, DELETE_TODO_ITEM} from './store/actionType'
 import store from './store/index';
 
 
@@ -18,7 +19,7 @@ class TodoList1 extends Component {
   handleOnChange(e) {
     //创建一个action
     const action = {
-      type: 'change_input_value',// type描述做什么事情
+      type: CHANGE_INPUT_VALUE,// type描述做什么事情
       value: e.target.value // 传递value
     };
     // 用dispatch把这句话传给store
@@ -33,10 +34,20 @@ class TodoList1 extends Component {
   // 按钮点击事件
   handleBtnClick() {
     const action = {
-      type: 'add_todo_item'
+      type: ADD_TODO_ITEM
     };
     store.dispatch(action)
   }
+
+  // 点击删除每一项
+  handleDeleteItem(index) {
+    const action = {
+      type: DELETE_TODO_ITEM,
+      index
+    };
+    store.dispatch(action)
+  }
+
 
   render() {
     return (
@@ -49,7 +60,8 @@ class TodoList1 extends Component {
           style={{marginTop: '10px', width: '300px'}}
           bordered
           dataSource={this.state.list}
-          renderItem={item => (<List.Item>{item}</List.Item>)}
+          renderItem={(item, index) => (
+            <List.Item onClick={this.handleDeleteItem.bind(this, index)}>{item}</List.Item>)}
         />
       </div>
     )
